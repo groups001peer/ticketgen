@@ -204,7 +204,7 @@ export default function App() {
             </RequireAuth>
           }
         >
-          <Route index element={<Navigate to="/account" replace />} />
+          <Route index element={<Navigate to="/login" replace />} />
           <Route path="account" element={<Account />} />
           <Route path="events" element={<MyEvents />} />
           <Route path="tickets/new" element={<CreateTicket />} />
