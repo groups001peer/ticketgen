@@ -4,12 +4,16 @@ import ConfirmDialog from "../components/ConfirmDialog";
 import Toast from "../components/Toast";
 import { db } from "../firebase";
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { useStore } from "../store";
+import { X } from "lucide-react";
+
 
 export default function EditTickets() {
   const nav = useNavigate();
   const [events, setEvents] = useState([]);
   const [confirmId, setConfirmId] = useState(null);
   const [toast, setToast] = useState("");
+  const { me } = useStore();
 
   useEffect(() => {
     const q = query(collection(db, "events"), orderBy("dateISO", "desc"));
@@ -23,14 +27,14 @@ export default function EditTickets() {
   return (
     <div>
       <div className="flex items-center justify-between px-4 h-12">
-        <button onClick={()=>nav(-1)} className="text-slate-500 text-sm">×</button>
+        <button onClick={()=>nav(-1)} className="text-slate-500 text-sm"><X /></button>
         <div className="font-medium">Edit Tickets Information</div>
         <div className="w-5" />
       </div>
 
-      <div className="px-4 text-xs text-orange-600">Balance: $0.00</div>
+  <div className="px-4 text-xs text-orange-600">Balance: {( (me?.balance) ?? 0 ).toFixed(2)}{" "} Pts</div>
       <div className="px-4 text-[11px] text-slate-500 mb-2">
-        update existing tickets info (venue, dates, time, ticket type and seat numbers) features. $1 per ticket edit
+        update existing tickets info (venue, dates, time, ticket type and seat numbers) features. 30 Points per ticket edit
       </div>
 
       <div className="bg-white">
@@ -69,8 +73,8 @@ export default function EditTickets() {
         ))}
       </div>
 
-      <div className="p-4">
-        <button onClick={()=>nav("/account")} className="px-4 py-2 bg-blue-600 text-white rounded-lg">Back to Home</button>
+      <div onClick={()=>nav("/event")} className="cursor-pointer text-center text-xs py-10 text-slate-400">
+        Back to Main App
       </div>
 
       <ConfirmDialog

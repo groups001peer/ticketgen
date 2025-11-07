@@ -196,6 +196,40 @@ export default function App() {
 
         <Route path="/auth/admin" element={<AdminLogin />} />
         {/* Protected routes (inside Shell) */}
+        {/* Ticket details route is intentionally outside Shell but still requires auth */}
+        <Route
+          path="/tickets/:id"
+          element={
+            <RequireAuth>
+              <TicketDetails />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="tickets/new" 
+          element={
+            <RequireAuth>
+              <CreateTicket />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="tickets/edit" 
+          element={
+            <RequireAuth>
+              <EditTickets />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="tickets/:id/edit" 
+          element={
+            <RequireAuth>
+              <EditTicketForm />
+            </RequireAuth>
+          }
+        />
+
         <Route
           path="/"
           element={
@@ -207,10 +241,9 @@ export default function App() {
           <Route index element={<Navigate to="/login" replace />} />
           <Route path="account" element={<Account />} />
           <Route path="events" element={<MyEvents />} />
-          <Route path="tickets/new" element={<CreateTicket />} />
-          <Route path="tickets/edit" element={<EditTickets />} />
-          <Route path="tickets/:id/edit" element={<EditTicketForm />} />
-          <Route path="tickets/:id" element={<TicketDetails />} />
+          {/* <Route path="tickets/new" element={<CreateTicket />} /> */}
+          {/* <Route path="tickets/edit" element={<EditTickets />} /> */}
+          {/* <Route path="tickets/:id/edit" element={<EditTicketForm />} /> */}
           <Route path="settings/location" element={<SettingsLocation />} />
           <Route path="settings/account" element={<SettingsAccount />} />
           <Route path="support" element={<Support />} />

@@ -79,12 +79,10 @@ function Header() {
     <div className="sticky top-0 z-20 bg-slate-900 text-white">
       <div className="flex items-center justify-between px-3 h-12">
         <div className="flex items-center gap-2">
-          <span className="font-black tracking-tight text-lg">ticketmaster</span>
-        </div>
-
-        {/* Center area: country selector (matches screenshot) */}
-        <div className="flex items-center gap-3">
-          <CountrySelector />
+          <div className="flex items-center gap-1.5">
+            <span className="font-black tracking-tight text-lg">ticketmaster</span>
+            <CountrySelector />
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
@@ -162,22 +160,37 @@ function CountrySelector() {
     <div className="relative" ref={ref}>
       <button onClick={()=>setOpen(v=>!v)} className="flex items-center gap-2 px-2 py-1 rounded-full bg-slate-800/60 hover:bg-slate-800/70">
         <span className={`fi rounded-full fi-${selected?.toLowerCase()} w-4 h-4 bg-contain bg-center`} />
-        {/* <span className="text-sm font-semibold">{selected}</span> */}
+        <span className="text-[10px] font-medium text-slate-300">{selected}</span>
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-64 max-h-80 overflow-auto bg-white text-slate-800 rounded-lg shadow-lg z-50">
-          <div className="p-2 border-b">
-            <input autoFocus value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search country…" className="input w-full" />
+        <div className="absolute left-[-20px] mt-2 w-64 bg-white text-slate-800 rounded-xl shadow-xl z-50 border border-slate-200/10">
+          <div className="p-2 border-b border-slate-100">
+            <input 
+              autoFocus 
+              value={query} 
+              onChange={e=>setQuery(e.target.value)} 
+              placeholder="Search country…" 
+              className="w-full px-3 py-1.5 text-sm bg-slate-50 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
           </div>
-          <div>
-            {filtered.map(c => (
-              <button key={c.code} onClick={()=>saveSelection(c.code)} className={`w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-slate-100 ${selected===c.code?"bg-slate-50":""}`}>
-                <span className={`fi fi-${c.code.toLowerCase()}`} />
-                <span className="truncate">{c.name}</span>
-                <span className="ml-auto text-xs text-slate-500">{c.code}</span>
-              </button>
-            ))}
+          <div className="max-h-[280px] overflow-y-auto">
+            {filtered.length === 0 ? (
+              <div className="px-3 py-2 text-sm text-slate-500 text-center">No countries found</div>
+            ) : (
+              filtered.map(c => (
+                <button 
+                  key={c.code} 
+                  onClick={()=>saveSelection(c.code)} 
+                  className={`w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-slate-50 transition-colors ${
+                    selected===c.code ? "bg-blue-50 text-blue-600" : ""
+                  }`}
+                >
+                  <span className={`fi fi-${c.code.toLowerCase()}`} />
+                  <span className="truncate text-sm">{c.name}</span>
+                  <span className="ml-auto text-xs text-slate-400 font-medium">{c.code}</span>
+                </button>
+              ))
+            )}
           </div>
         </div>
       )}

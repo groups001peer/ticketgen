@@ -1,7 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, runTransaction } from "firebase/firestore";
+import { useStore } from "../store";
+import Toast from "../components/Toast";
 
 export default function EditTicketForm() {
   const { id } = useParams();
@@ -9,6 +11,9 @@ export default function EditTicketForm() {
   const [ev, setEv] = useState(null);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ dateText: "", venue: "", gate: "", type: "", withSeats: true, seats: [] });
+  const [toast, setToast] = useState("");
+  const { me } = useStore();
+  const EDIT_COST = 30; // cost in credits to edit a ticket
 
   useEffect(() => {
     let mounted = true;
@@ -40,19 +45,39 @@ export default function EditTicketForm() {
   const save = async (e) => {
     e.preventDefault();
     if (!ev) return;
+    if (!me?.uid) return setToast("You must be signed in to edit events");
     try {
       const tickets = form.withSeats ? form.seats : [];
-      await updateDoc(doc(db, "events", ev.id), {
-        dateDisplay: form.dateText,
-        venue: form.venue,
-        gate: form.gate,
-        type: form.type,
-        tickets,
+      // Use transaction to atomically update event and deduct user balance
+      await runTransaction(db, async (transaction) => {
+        const userRef = doc(db, "users", me.uid);
+        const userSnap = await transaction.get(userRef);
+        const currentBalance = (userSnap.exists() && userSnap.data().balance) ? userSnap.data().balance : 0;
+        if (currentBalance < EDIT_COST) {
+          const err = new Error("INSUFFICIENT_BALANCE");
+          throw err;
+        }
+
+        const eventRef = doc(db, "events", ev.id);
+        transaction.update(eventRef, {
+          dateDisplay: form.dateText,
+          venue: form.venue,
+          gate: form.gate,
+          type: form.type,
+          tickets,
+        });
+
+        transaction.update(userRef, { balance: currentBalance - EDIT_COST });
       });
-      alert("Saved and charged 1 credit.");
+
+      setToast(`Saved and charged ${EDIT_COST} credits.`);
       nav("/tickets/edit");
     } catch (err) {
-      alert(err.message || "Failed to save");
+      if (err?.message === "INSUFFICIENT_BALANCE") {
+        setToast("Insufficient credits. Please top up to edit this ticket.");
+      } else {
+        setToast(err.message || "Failed to save");
+      }
     }
   };
 
@@ -106,8 +131,9 @@ export default function EditTicketForm() {
           </div>
         ))}
 
-        <button className="w-full py-3 bg-blue-600 text-white rounded-xl font-medium">Save (cost 1 credit)</button>
+        <button className="w-full py-3 bg-blue-600 text-white rounded-xl font-medium">{`Save (cost ${EDIT_COST} credits)`}</button>
       </form>
+      <Toast text={toast} open={!!toast} onClose={()=>setToast("")} />
     </div>
   );
 }
