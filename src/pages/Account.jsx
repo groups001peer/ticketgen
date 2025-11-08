@@ -35,12 +35,12 @@ export default function Account() {
         <ListItem title="Delete tickets" onClick={()=>nav("/tickets/edit")} />
         <ListItem title="Show/hide tickets on My Events page" onClick={()=>nav("/tickets/edit")} />
         <ListItem title="Buy Credit on telegram (buy bulk for discount)" onClick={()=>nav("/buy-credits")} />
-        <ListItem title="Contact Support Only (telegram only)" onClick={()=>nav("/support")} />
+        <ListItem title="Contact Support Only (telegram only)" />
       </div>
 
       <div className="text-xs px-4 mt-6 text-slate-500">Account Controls</div>
       <div className="mt-1 bg-white">
-        <ListItem title="Change Password" onClick={()=>nav("/settings/account")} />
+        <ListItem title="Change Password"/>
         <ListItem title="Log out" onClick={handleLogout} />
       </div>
         <InstallPrompt />
