@@ -9,3 +9,36 @@
 
 
 button:disabled{ opacity:.6; cursor:not-allowed; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Prevent iOS focus-zoom by keeping form controls >=16px on touch devices */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea, button {
+    font-size: 16px !important;
+  }
+}
+
+/* Keep user’s text sizing consistent on iOS */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Optional: prevent double-tap zoom on buttons/links (modern Safari/Chrome) */
+button, a {
+  touch-action: manipulation;
+}

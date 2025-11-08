@@ -377,8 +377,8 @@ function CountrySelector() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search country…"
-              className="w-full px-3 py-1.5 text-sm bg-slate-50 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-            />
+              className="w-full px-3 py-1.5 text-base bg-slate-50 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+            /> 
           </div>
           <div className="max-h-[280px] overflow-y-auto">
             {filtered.length === 0 ? (
