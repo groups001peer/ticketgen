@@ -458,7 +458,7 @@ function BottomNav() {
   };
 
   return (
-    <div className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 md:max-w-sm mx-auto z-20">
+    <div className="fixed bottom-0 inset-x-0 bg-white border-t pb-8 border-slate-200 md:max-w-sm mx-auto z-20">
       <div className="flex items-stretch">
         <NavItem to="/discover" icon={Search} label="Discover" />
         <NavItem to="/for-you" icon={Heart} label="For You" />
