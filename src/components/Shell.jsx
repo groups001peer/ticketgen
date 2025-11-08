@@ -423,7 +423,7 @@ function Tab({ to, label }) {
     <NavLink
       to={to}
       className={`flex-1 text-center py-3 text-sm font-semibold transition-colors ${
-        active ? "bg-blue-600 text-white" : "bg-blue-700/50 text-blue-100"
+        active ? "bg-blue-600 text-white" : "bg-blue-600 text-blue-100"
       }`}
     >
       {label}
