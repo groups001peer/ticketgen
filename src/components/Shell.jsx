@@ -252,7 +252,7 @@
 
 
 import { NavLink, useLocation, Outlet } from "react-router-dom";
-import { Search, Heart, Ticket, User } from "lucide-react";
+import { Search, Heart, Ticket, User, Tag } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { countries as COUNTRIES_MAP } from "countries-list";
 import { useStore } from "../store";
@@ -434,7 +434,7 @@ function Tab({ to, label }) {
 /* ─────────────────────────────  BOTTOM NAV  ─────────────────────────────── */
 
 function BottomNav() {
-  const NavItem = ({ to, icon, label, customIcon }) => {
+  const NavItem = ({ to, icon, label }) => {
     const IconComp = icon;
     return (
       <NavLink
@@ -445,11 +445,7 @@ function BottomNav() {
           }`
         }
       >
-        {customIcon ? (
-          <span className="text-xl font-bold leading-none mb-0.5">£</span>
-        ) : IconComp ? (
-          <IconComp className="w-5 h-5" strokeWidth={2} />
-        ) : null}
+        <IconComp className="w-5 h-5" strokeWidth={2} />
         <span className={`text-xs ${to === "/events" ? "font-medium" : ""}`}>
           {label}
         </span>
@@ -463,7 +459,7 @@ function BottomNav() {
         <NavItem to="/discover" icon={Search} label="Discover" />
         <NavItem to="/for-you" icon={Heart} label="For You" />
         <NavItem to="/events" icon={Ticket} label="My Events" />
-        <NavItem to="/sell" customIcon label="Sell" />
+        <NavItem to="/sell" icon={Tag} label="Sell" />
         <NavItem to="/account" icon={User} label="My Account" />
       </div>
     </div>
