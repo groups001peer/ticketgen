@@ -82,7 +82,7 @@ export default function TicketDetails() {
         />
 
         {/* Action buttons under the carousel (fixed spacing like reference) */}
-        <div className="mt-24 px-6">
+        <div className="mt-12 px-6">
           <div className="flex gap-4">
             <button
               onClick={() => { setStage(1); setSheet(true); }}
@@ -272,14 +272,14 @@ function SlideCard({ seat, gate, bannerUrl, title, date, venue, className = "" }
         </button>
 
         {/* Links row */}
-        <div className="flex justify-center gap-12 text-xs text-blue-600 font-medium mt-10">
+        <div className="flex justify-center gap-12 text-xs text-blue-600 font-medium mt-7">
           <button className="text-[16px] font-semibold">View Barcode</button>
           <button className="text-[16px] font-semibold">Ticket Details</button>
         </div>
 
       </div>
         {/* Verified pill */}
-        <button className="mt-12 w-full bg-[#1E5BFF] text-white rounded-lg text-sm font-semibold flex items-center justify-center gap-2">
+        <button className="mt-8 w-full bg-[#1E5BFF] text-white rounded-lg text-sm font-semibold flex items-center justify-center gap-2">
           <img src="https://omwtfyh69.site/progress/vendor/slick/fonts/tixapp/assets/img/icon/verifiedbytix.png" className="w-full scale-75 object-cover" alt="" />
           {/* ticketmaster verified */}
         </button>
