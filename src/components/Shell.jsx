@@ -1,71 +1,3 @@
-// import { NavLink, useLocation, useNavigate } from "react-router-dom";
-
-// function Header() {
-//   const navigate = useNavigate();
-//   return (
-//     <div className="sticky top-0 z-20 bg-slate-900 text-white">
-//       <div className="flex items-center justify-between px-4 h-12">
-//         <button onClick={() => navigate(-1)} className="text-sm opacity-80">×</button>
-//         <div className="font-black tracking-tight">ticketmaster<span className="align-top text-[10px] ml-1">®</span></div>
-//         <button className="text-xs opacity-80">Help</button>
-//       </div>
-//       <div className="flex">
-//         <Tab to="/events" label="Upcoming" />
-//         <Tab to="/events?tab=past" label="Past" />
-//       </div>
-//     </div>
-//   );
-// }
-// function Tab({ to, label }) {
-//   const loc = useLocation();
-//   const active = loc.pathname === "/events" && (!new URLSearchParams(loc.search).get("tab") && label==="Upcoming" || new URLSearchParams(loc.search).get("tab")==="past" && label==="Past");
-//   return (
-//     <NavLink to={to} className={`flex-1 text-center py-2 text-sm ${active ? "bg-blue-600 text-white" : "bg-slate-800 text-slate-300"}`}>
-//       {label}
-//     </NavLink>
-//   );
-// }
-
-// function BottomNav() {
-//   const link = (to, label) => (
-//     <NavLink
-//       to={to}
-//       className={({ isActive }) =>
-//         `flex-1 text-center py-3 text-xs ${isActive ? "text-blue-600" : "text-slate-500"}`
-//       }
-//     >
-//       {label}
-//     </NavLink>
-//   );
-//   return (
-//     <div className="fixed bottom-0 inset-x-0 bg-white border-t md:max-w-sm mx-auto">
-//       <div className="flex">{link("/discover","Discover")}{link("/for-you","For You")}{link("/events","My Events")}{link("/sell","Sell")}{link("/account","My Account")}</div>
-//     </div>
-//   );
-// }
-
-// export default function Shell({ children }) {
-//   const loc = useLocation();
-//   const showTicketTabs = loc.pathname.startsWith("/events") || loc.pathname.startsWith("/tickets/");
-//   return (
-//     <div className="min-h-screen bg-slate-50 md:max-w-sm mx-auto relative">
-//       {showTicketTabs ? <Header/> : null}
-//       <div className={`pb-16 ${showTicketTabs ? "" : "pt-2"}`}>{children}</div>
-//       <BottomNav />
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
 import { NavLink, useLocation, Outlet } from "react-router-dom";
 import { Search, Heart, Ticket, User } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -76,11 +8,15 @@ import { doc, updateDoc } from "firebase/firestore";
 
 function Header() {
   return (
-    <div className="sticky top-0 z-20 bg-slate-900 text-white">
+    <div className="sticky top-0 z-20 bg-gray-800 text-white">
       <div className="flex items-center justify-between px-3 h-12">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5">
-            <span className="font-black tracking-tight text-lg">ticketmaster</span>
+            {/* <span className="font-semibold italic text-xl">ticketmaster <span className="text-[9px]">®</span></span> */}
+            <span className="font-semibold italic text-xl">
+              ticketmaster <span className="relative -left-1 -top-1 font-light text-gray-300 text-[10px] leading-none">®</span>
+            </span>
+
             <CountrySelector />
           </div>
         </div>
@@ -121,12 +57,24 @@ function CountrySelector() {
   useEffect(() => {
     // prefer me.countryCode when available
     if (me?.countryCode && me.countryCode !== selected) setSelected(me.countryCode.toUpperCase());
+
     // close on outside click
     function onDoc(e) {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     }
+
+    // allow other parts of the app to broadcast country updates
+    function onCountry(e) {
+      const code = e?.detail || (e && e.code);
+      if (code) setSelected(String(code).toUpperCase());
+    }
+
     document.addEventListener("click", onDoc);
-    return () => document.removeEventListener("click", onDoc);
+    window.addEventListener("countryChange", onCountry);
+    return () => {
+      document.removeEventListener("click", onDoc);
+      window.removeEventListener("countryChange", onCountry);
+    };
   }, [me?.countryCode, selected]);
 
   const filtered = useMemo(() => {
@@ -154,17 +102,24 @@ function CountrySelector() {
         console.warn("could not persist selected country", e);
       }
     }
+    // broadcast change so other components (or other CountrySelector instances)
+    // can react immediately without a full reload
+    try {
+      window.dispatchEvent(new CustomEvent("countryChange", { detail: code }));
+    } catch {
+      // ignore (non-browser envs)
+    }
   };
 
   return (
     <div className="relative" ref={ref}>
-      <button onClick={()=>setOpen(v=>!v)} className="flex items-center gap-2 px-2 py-1 rounded-full bg-slate-800/60 hover:bg-slate-800/70">
-        <span className={`fi rounded-full fi-${selected?.toLowerCase()} w-4 h-4 bg-contain bg-center`} />
-        <span className="text-[10px] font-medium text-slate-300">{selected}</span>
+      <button onClick={()=>setOpen(v=>!v)} className="flex items-center gap-2  hover:bg-slate-800/70">
+        <span className={` rounded-full fi-${selected?.toLowerCase()} w-6 h-6 bg-contain bg-center`} />
+        {/* <span className="text-[10px] font-medium text-slate-300">{selected}</span> */}
       </button>
 
       {open && (
-        <div className="absolute left-[-20px] mt-2 w-64 bg-white text-slate-800 rounded-xl shadow-xl z-50 border border-slate-200/10">
+        <div className="absolute -left-5 mt-2 w-64 bg-white text-slate-800 rounded-xl shadow-xl z-50 border border-slate-200/10">
           <div className="p-2 border-b border-slate-100">
             <input 
               autoFocus 
@@ -238,7 +193,7 @@ function BottomNav() {
   };
 
   return (
-    <div className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 md:max-w-sm mx-auto z-20">
+    <div className="fixed bottom-0 inset-x-0 h-20 bg-white border-t border-slate-200 md:max-w-sm mx-auto z-20">
       <div className="flex items-stretch">
         <NavItem to="/discover" icon={Search} label="Discover" />
         <NavItem to="/for-you" icon={Heart} label="For You" />
