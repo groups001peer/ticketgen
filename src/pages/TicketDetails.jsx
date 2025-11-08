@@ -261,7 +261,7 @@ function SlideCard({ seat, gate, bannerUrl, title, date, venue, className = "" }
           </div>
         </div>
       )}
-      <h1 className="text-center py-2 font-medium text-gray-800 text-[13px]">{gate}</h1>
+      <h1 className="text-center py-2 font-medium text-gray-800 text-[15px]">{gate}</h1>
       {/* Content */}
       <div className="px-6 pb-5">
         {/* Wallet button */}
