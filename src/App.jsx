@@ -155,7 +155,6 @@ import Register from "./pages/Register";
 
 // Regular user pages
 import MyEvents from "./pages/MyEvents";
-import Account from "./pages/Account";
 import CreateTicket from "./pages/CreateTicket";
 import EditTickets from "./pages/EditTickets";
 import EditTicketForm from "./pages/EditTicketForm";
@@ -175,6 +174,8 @@ import RequireAuth from "./guards/RequireAuth";
 import RequireAdmin from "./guards/RequireAdmin";
 import AdminLogin from "./pages/AdminLogin";
 import InstallButton from "./components/InstallButton";
+import ForYou from "./pages/ForYou";
+import MyAccount from "./pages/Account";
 
 export default function App() {
   const { loading } = useStore();
@@ -239,7 +240,8 @@ export default function App() {
           }
         >
           <Route index element={<Navigate to="/login" replace />} />
-          <Route path="account" element={<Account />} />
+          <Route path="account" element={<MyAccount />} />
+          <Route path="for-you" element={<ForYou />} />
           <Route path="events" element={<MyEvents />} />
           {/* <Route path="tickets/new" element={<CreateTicket />} /> */}
           {/* <Route path="tickets/edit" element={<EditTickets />} /> */}

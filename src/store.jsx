@@ -91,10 +91,18 @@ export function StoreProvider({ children }) {
     return () => unsub();
   }, []);
 
+  const updateMe = async () => {
+    if (!auth.currentUser) return;
+    const ref = doc(db, "users", auth.currentUser.uid);
+    const snap = await getDoc(ref);
+    setMe(snap.exists() ? { uid: auth.currentUser.uid, ...snap.data() } : null);
+  };
+
   const api = useMemo(() => ({
     me,
     loading,
     signOut: () => signOut(auth),
+    updateMe,
   }), [me, loading]);
 
   return <Ctx.Provider value={api}>{children}</Ctx.Provider>;
