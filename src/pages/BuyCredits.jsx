@@ -59,7 +59,7 @@ export default function BuyCredits(){
 
   // === Configuration Update ===
   // 1. Set the correct Telegram ID/Username for direct messaging.
-  const telegramTarget = "ticketgen"; // <<< REPLACE THIS
+  const telegramTarget = "Bgon828"; // <<< REPLACE THIS
 
   // 2. Set the conversion rate for USD.
   const usdPerPoint = 0.04;
