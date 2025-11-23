@@ -72,7 +72,7 @@ export default function BuyCredits(){
       <h1 className="text-lg font-semibold mb-3">Buy Credit on Telegram</h1>
       <div className="bg-white rounded-xl p-4 shadow space-y-3">
         {/* Updated text for minimum and currency */}
-        <div className="text-sm text-slate-600">Choose amount (minimum 250 points = $10)</div>
+        <div className="text-sm text-slate-600">Choose amount (minimum 250 points = $30)</div>
         <select className="input" value={credits} onChange={e=>setCredits(Number(e.target.value))}>
           {[250,500,1000,2000,5000].map(n => <option key={n} value={n}>{n} points</option>)}
         </select>
