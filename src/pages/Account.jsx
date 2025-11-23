@@ -203,7 +203,7 @@ export default function MyAccount() {
     <div className="min-h-screen bg-gray-50">
 
       {/* Account Info Section */}
-      <div className="bg-[#2C3E50] text-white px-6 pt-4 pb-6">
+      <div className="bg-[#2C3E50] text-white px-6 pt-4 -mt-2 pb-6">
         <h1 className="text-2xl text-center font-semibold mb-0">My Account</h1>
         {(me?.role === "admin" || me?.isAdmin) && (
           <p className="text-center">Money Balance : ${me?.balance}</p>
