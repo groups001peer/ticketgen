@@ -53,7 +53,7 @@ import { useStore } from "../store";
 
 export default function BuyCredits(){
   const { createTopupRequest } = useStore();
-  // minimum points is 250 ($10). conversion: 1 point = $0.04
+  // minimum points is 250 ($30). conversion: 1 point = $0.04
   const [credits, setCredits] = useState(250);
   const [note, setNote] = useState("");
 
@@ -62,7 +62,7 @@ export default function BuyCredits(){
   const telegramTarget = "Bgon828"; // <<< REPLACE THIS
 
   // 2. Set the conversion rate for USD.
-  const usdPerPoint = 0.04;
+const usdPerPoint = 0.12;
   // ============================
 
   const usdAmount = credits * usdPerPoint;
