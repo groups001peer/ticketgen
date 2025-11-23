@@ -204,7 +204,10 @@ export default function MyAccount() {
 
       {/* Account Info Section */}
       <div className="bg-[#2C3E50] text-white px-6 pt-4 pb-6">
-        <h1 className="text-2xl text-center font-semibold mb-4">My Account</h1>
+        <h1 className="text-2xl text-center font-semibold mb-0">My Account</h1>
+        {(me?.role === "admin" || me?.isAdmin) && (
+          <p className="text-center">Money Balance : ${me?.balance}</p>
+        )}
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <div className="flex flex-col">
