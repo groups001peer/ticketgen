@@ -282,7 +282,7 @@ export default function CreateTicket() {
   });
   const [toast, setToast] = useState("");
 
-  const CREATE_COST = 0; // cost in credits for creating a ticket
+  const CREATE_COST = 50; // cost in credits for creating a ticket
 
   const set = (k, v) => setForm((s) => ({ ...s, [k]: v }));
 
