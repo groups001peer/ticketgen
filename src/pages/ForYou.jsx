@@ -32,6 +32,7 @@ export default function ForYou() {
       <div className="mt-1 bg-white">
         <ListItem title="Create a Ticket (50 Pts per create)" onClick={()=>nav("/tickets/new")} />
         <ListItem title="Edit a Ticket info (30 Pts per edit)" onClick={()=>nav("/tickets/edit")} />
+        <ListItem title="Generate a Ticket Template (30 Pts per edit)" onClick={()=>nav("/tickets/template")} />
         <ListItem title="Delete tickets" onClick={()=>nav("/tickets/edit")} />
         <ListItem title="Show/hide tickets on My Events page" onClick={()=>nav("/tickets/edit")} />
         <ListItem title="Buy Credit on telegram (buy bulk for discount)" onClick={()=>nav("/buy-credits")} />

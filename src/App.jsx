@@ -29,6 +29,7 @@ import AdminLogin from "./pages/AdminLogin";
 import InstallButton from "./components/InstallButton";
 import ForYou from "./pages/ForYou";
 import MyAccount from "./pages/Account";
+import TicketTemplate from "./pages/TicketTemplate";
 
 export default function App() {
   const { loading } = useStore();
@@ -72,6 +73,14 @@ export default function App() {
           element={
             <RequireAuth>
               <EditTickets />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="tickets/template" 
+          element={
+            <RequireAuth>
+              <TicketTemplate />
             </RequireAuth>
           }
         />
