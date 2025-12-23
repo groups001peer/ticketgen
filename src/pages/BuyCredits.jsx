@@ -58,7 +58,7 @@ export default function BuyCredits(){
 
   // === Configuration Update ===
   // 1. Set the correct Telegram ID/Username for direct messaging.
-  const telegramTarget = "ticketgen"; // <<< REPLACE THIS
+  const telegramTarget = "bgon828"; // <<< REPLACE THIS
 
   // Correct conversion
   const usdPerPoint = 0.12; // 1 point = $0.12 → 250 pts = $30
