@@ -105,9 +105,11 @@ export default function App() {
           <Route path="account" element={<MyAccount />} />
           <Route path="for-you" element={<ForYou />} />
           <Route path="events" element={<MyEvents />} />
-          {/* <Route path="tickets/new" element={<CreateTicket />} /> */}
-          {/* <Route path="tickets/edit" element={<EditTickets />} /> */}
-          {/* <Route path="tickets/:id/edit" element={<EditTicketForm />} /> */}
+
+          <Route path="tickets/new" element={<CreateTicket />} />
+          <Route path="tickets/edit" element={<EditTickets />} />
+          <Route path="tickets/:id/edit" element={<EditTicketForm />} />
+          
           <Route path="settings/location" element={<SettingsLocation />} />
           <Route path="settings/account" element={<SettingsAccount />} />
           <Route path="support" element={<Support />} />
