@@ -116,7 +116,7 @@ export default function TicketTemplate() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0f16]">
+    <div className="min-h-screen bg-black">
       {/* Top bar */}
       <div className="flex items-center justify-between px-4 h-12 bg-black/30">
         <button onClick={() => nav(-1)} className="text-white/70 text-sm">

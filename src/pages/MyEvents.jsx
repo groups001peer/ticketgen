@@ -61,7 +61,7 @@ export default function MyEvents() {
     });
     return () => unsubAuth();
   }, []);
-
+console.log(uid)
   // Subscribe to this user's events
   useEffect(() => {
     if (!uid) {
@@ -71,7 +71,7 @@ export default function MyEvents() {
 
     const q = query(
       collection(db, "events"),
-      where("ownerId", "==", uid),
+      where("ownerUid", "==", uid),
       orderBy("dateISO", "desc")
     );
 
